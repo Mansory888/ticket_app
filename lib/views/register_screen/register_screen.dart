@@ -39,7 +39,7 @@ class _RegisterScreenWidget extends State<RegisterScreenWidget> {
         );
       } else {
         final registeredUserMap = await registerUser(user.toJson());
-        print('User registered successfully:' + registeredUserMap.toString());
+        print('User registered successfully:' + registeredUserMap);
         Navigator.pop(context);
       }
 

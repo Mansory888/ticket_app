@@ -5,18 +5,18 @@ import '/models/user.dart';
 import 'api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Map<String, dynamic>> registerUser(Map<String, dynamic> userData) async {
-  final response = await postRequest('/register', userData);
+Future<String> registerUser(Map<String, dynamic> userData) async {
+  final response = await postRequest('users/register', userData);
 
   if (response.statusCode == 201) {
-    return json.decode(response.body);
+    return response.body;
   } else {
     throw response.body;
   }
 }
 
 Future<Map<String, dynamic>> loginUser(Map<String, dynamic> credentials) async {
-  final response = await postRequest('/login', credentials);
+  final response = await postRequest('users/login', credentials);
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
