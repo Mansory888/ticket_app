@@ -22,5 +22,12 @@
   "Questions": "Questions",
   "Exam": "Exam",
   "Home": "Home",
-  "Settings": "Settings"
+  "Settings": "Settings",
+  "ExamComplete": "Exam Complete",
+  "Youhaveanswered": "You have answered",
+  "questionscorrectly": "questions correctly.",
+  "backtomenu": "back to menu",
+  "retry": "Try again",
+  "Thatis": "That is",
+  "Questionsyoufailed" : "Questions you failed:"
 }

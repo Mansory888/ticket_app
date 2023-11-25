@@ -289,6 +289,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Exam Complete`
+  String get ExamComplete {
+    return Intl.message(
+      'Exam Complete',
+      name: 'ExamComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have answered`
+  String get Youhaveanswered {
+    return Intl.message(
+      'You have answered',
+      name: 'Youhaveanswered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `questions correctly.`
+  String get questionscorrectly {
+    return Intl.message(
+      'questions correctly.',
+      name: 'questionscorrectly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `back to menu`
+  String get backtomenu {
+    return Intl.message(
+      'back to menu',
+      name: 'backtomenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get retry {
+    return Intl.message(
+      'Try again',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `That is`
+  String get Thatis {
+    return Intl.message(
+      'That is',
+      name: 'Thatis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Questions you failed:`
+  String get Questionsyoufailed {
+    return Intl.message(
+      'Questions you failed:',
+      name: 'Questionsyoufailed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

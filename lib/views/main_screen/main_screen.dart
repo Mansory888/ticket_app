@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../../services/api/question_service.dart';
+import '../question_view/question_view.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({super.key});
@@ -10,7 +12,25 @@ class MainScreenWidget extends StatefulWidget {
 }
 
 class _MainScreenWidget extends State<MainScreenWidget> {
-  int _selectedIndex = 0; // This will track the selected index
+  int _selectedIndex = 0;
+
+  void loadExam() async {
+    try {
+      var loadedQuestions = await getExam();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QuestionViewWidget(
+            questions: loadedQuestions,
+            isExam: true,
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   static const List<Widget> _widgetOptions = <Widget>[
     Text('Home Page'),
@@ -226,7 +246,7 @@ class _MainScreenWidget extends State<MainScreenWidget> {
                         child: Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              // Handle button press here
+                              loadExam();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

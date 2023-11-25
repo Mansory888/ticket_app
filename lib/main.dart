@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       routes: routes,
-      initialRoute: '/question',
+      initialRoute: '/',
     );
   }
 }

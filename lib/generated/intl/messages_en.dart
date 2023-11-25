@@ -26,16 +26,23 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "CreateAccount": MessageLookupByLibrary.simpleMessage("Create Account"),
         "Exam": MessageLookupByLibrary.simpleMessage("Exam"),
+        "ExamComplete": MessageLookupByLibrary.simpleMessage("Exam Complete"),
         "Home": MessageLookupByLibrary.simpleMessage("Home"),
         "LogIn": MessageLookupByLibrary.simpleMessage("Log In"),
         "Questions": MessageLookupByLibrary.simpleMessage("Questions"),
+        "Questionsyoufailed":
+            MessageLookupByLibrary.simpleMessage("Questions you failed:"),
         "Register": MessageLookupByLibrary.simpleMessage("Register"),
         "RegisterAccount":
             MessageLookupByLibrary.simpleMessage("Register Account"),
         "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "Start": MessageLookupByLibrary.simpleMessage("Start"),
+        "Thatis": MessageLookupByLibrary.simpleMessage("That is"),
         "UserName": MessageLookupByLibrary.simpleMessage("User Name"),
         "Welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
+        "Youhaveanswered":
+            MessageLookupByLibrary.simpleMessage("You have answered"),
+        "backtomenu": MessageLookupByLibrary.simpleMessage("back to menu"),
         "emailAdress": MessageLookupByLibrary.simpleMessage("Email Address"),
         "fillDetails":
             MessageLookupByLibrary.simpleMessage("Fill your details"),
@@ -50,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "passingExamMessage": MessageLookupByLibrary.simpleMessage(
             "Passing the exam is more easier and faster with Discount"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "questionscorrectly":
+            MessageLookupByLibrary.simpleMessage("questions correctly."),
+        "retry": MessageLookupByLibrary.simpleMessage("Try again"),
         "startTheJourney":
             MessageLookupByLibrary.simpleMessage("Start the Journey"),
         "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back !")

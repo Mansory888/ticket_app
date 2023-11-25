@@ -3,10 +3,16 @@ import 'package:ticket_app/models/question.dart';
 import '../../generated/l10n.dart';
 import '../../models/answer.dart';
 import 'dart:convert';
+import 'package:ticket_app/views/finish_screen/finish_screen.dart';
 import '../../services/api/question_service.dart';
 
 class QuestionViewWidget extends StatefulWidget {
-  const QuestionViewWidget({super.key});
+  final List<Question> questions;
+  final bool isExam;
+
+  const QuestionViewWidget(
+      {Key? key, required this.questions, required this.isExam})
+      : super(key: key);
 
   @override
   State<QuestionViewWidget> createState() => _QuestionViewWidget();
@@ -17,23 +23,17 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   int currentQuestionIndex = 0;
   Map<int, bool?> answeredQuestions = {};
   Map<int, int?> selectedAnswers = {};
-  bool isExam = true;
-
-  void loadExam() async {
-    try {
-      var loadedQuestions = await getExam();
-      setState(() {
-        questions = loadedQuestions;
-      });
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  bool isExam = false;
 
   @override
   void initState() {
     super.initState();
-    loadExam(); // Call the function to load exam data
+    // Now, questions are already provided by the parent widget
+    // So, you can directly use them instead of loading from 'loadExam'
+    setState(() {
+      questions = widget.questions;
+      isExam = widget.isExam;
+    });
   }
 
   void goToQuestion(int index, bool table) {
@@ -53,6 +53,18 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
       answeredQuestions[questionIndex] = isCorrect;
       selectedAnswers[questionIndex] = asnwerIndex;
     });
+
+    if (answeredQuestions.length == questions.length) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FinishScreenWidget(
+            questions: questions,
+            answeredQuestions: answeredQuestions,
+          ),
+        ),
+      );
+    }
   }
 
   void goToPreviousQuestion() {
@@ -83,8 +95,13 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
     if (!answeredQuestions.containsKey(index)) {
       return null; // default color
     }
+
     if (answeredQuestions[index] == null) {
       return Colors.blue; // viewed but not answered
+    }
+
+    if (isExam) {
+      return Colors.blue;
     }
     return answeredQuestions[index]! ? Colors.green : Colors.red; // answered
   }
@@ -122,12 +139,21 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         Answer answer = entry.value;
         String letter = 'ABCD'[idx % 4];
         // Determine button color based on whether the answer is correct or incorrect
-        Color buttonColor = selectedAnswers[currentQuestionIndex] == idx
-            ? (answeredQuestions[currentQuestionIndex] == true
-                ? Colors.green // Correct answer
-                : Colors.red) // Incorrect answer
-            : Colors.white; // Not selected
-        // Not answered // To cycle through 'A', 'B', 'C', 'D'
+        Color buttonColor;
+
+        if (selectedAnswers[currentQuestionIndex] == idx) {
+          if (isExam) {
+            buttonColor = Colors.white; // If it's not an exam, always white
+          } else {
+            if (answeredQuestions[currentQuestionIndex] == true) {
+              buttonColor = Colors.green; // Correct answer in exam
+            } else {
+              buttonColor = Colors.red; // Incorrect answer in exam
+            }
+          }
+        } else {
+          buttonColor = Colors.white; // Not selected
+        }
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -149,9 +175,10 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
             child: Text("$letter: ${answer.answer}",
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.035,
-                  color: isQuestionAnswered &&
-                          selectedAnswers[currentQuestionIndex] == idx
-                      ? Colors.white
+                  color: (!isExam ||
+                          (isQuestionAnswered &&
+                              selectedAnswers[currentQuestionIndex] == idx))
+                      ? Colors.black
                       : Theme.of(context).colorScheme.tertiary,
                 )),
           ),
@@ -174,7 +201,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Exam'), // First text element
+            Text(S.of(context).Exam), // First text element
             Text('10:50'),
             Container(
                 margin: const EdgeInsets.fromLTRB(
