@@ -29,5 +29,10 @@
   "backtomenu": "back to menu",
   "retry": "Try again",
   "Thatis": "That is",
-  "Questionsyoufailed" : "Questions you failed:"
+  "Questionsyoufailed" : "Questions you failed:",
+  "Topics": "Topics",
+  "QuestionWrong": "If you think this question is wrong, please tell us:",
+  "ReportQuestion": "Report Question",
+  "Send": "Send",
+  "Cancel": "Cancel"
 }

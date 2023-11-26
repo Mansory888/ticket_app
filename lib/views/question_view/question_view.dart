@@ -209,7 +209,6 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
                 child: IconButton(
                   icon: const Icon(Icons.table_chart),
                   onPressed: () {
-                    print(answeredQuestions);
                     showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
@@ -294,7 +293,85 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
             IconButton(
               icon: Icon(Icons.error_outline),
               onPressed: () {
-                // Handle back arrow tap
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  S.of(context).ReportQuestion,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(S.of(context).QuestionWrong),
+                              ),
+                              const SizedBox(
+                                height: 200,
+                                child: TextField(
+                                  maxLines: null, // Set this
+                                  expands: true,
+                                  maxLength: 200, // and this
+                                  keyboardType: TextInputType
+                                      .multiline, // Allows for multiple lines
+                                  textAlignVertical: TextAlignVertical
+                                      .top, // Aligns text to the top
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        minimumSize:
+                                            const Size(double.infinity, 40),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      child: Text(S.of(context).Cancel),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        minimumSize:
+                                            const Size(double.infinity, 40),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      child: Text(S.of(context).Send),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ));
+                    });
               },
             ),
             Visibility(

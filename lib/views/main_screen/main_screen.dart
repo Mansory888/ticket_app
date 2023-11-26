@@ -3,6 +3,7 @@ import '../../generated/l10n.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../services/api/question_service.dart';
 import '../question_view/question_view.dart';
+import '../topic_screen/topic_list_screen.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({super.key});
@@ -221,7 +222,7 @@ class _MainScreenWidget extends State<MainScreenWidget> {
                         child: Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              // Handle button press here
+                              Navigator.pushNamed(context, '/topicList');
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
@@ -232,7 +233,7 @@ class _MainScreenWidget extends State<MainScreenWidget> {
                               ),
                             ),
                             child: Text(
-                              S.of(context).Questions,
+                              S.of(context).Topics,
                               style: TextStyle(
                                   fontSize: 16,
                                   color:

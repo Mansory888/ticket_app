@@ -24,20 +24,27 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AlreadyHaveAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
+        "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "CreateAccount": MessageLookupByLibrary.simpleMessage("Create Account"),
         "Exam": MessageLookupByLibrary.simpleMessage("Exam"),
         "ExamComplete": MessageLookupByLibrary.simpleMessage("Exam Complete"),
         "Home": MessageLookupByLibrary.simpleMessage("Home"),
         "LogIn": MessageLookupByLibrary.simpleMessage("Log In"),
+        "QuestionWrong": MessageLookupByLibrary.simpleMessage(
+            "If you think this question is wrong, please tell us:"),
         "Questions": MessageLookupByLibrary.simpleMessage("Questions"),
         "Questionsyoufailed":
             MessageLookupByLibrary.simpleMessage("Questions you failed:"),
         "Register": MessageLookupByLibrary.simpleMessage("Register"),
         "RegisterAccount":
             MessageLookupByLibrary.simpleMessage("Register Account"),
+        "ReportQuestion":
+            MessageLookupByLibrary.simpleMessage("Report Question"),
+        "Send": MessageLookupByLibrary.simpleMessage("Send"),
         "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "Start": MessageLookupByLibrary.simpleMessage("Start"),
         "Thatis": MessageLookupByLibrary.simpleMessage("That is"),
+        "Topics": MessageLookupByLibrary.simpleMessage("Topics"),
         "UserName": MessageLookupByLibrary.simpleMessage("User Name"),
         "Welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
         "Youhaveanswered":
