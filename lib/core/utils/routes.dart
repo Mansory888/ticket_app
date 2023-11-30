@@ -8,6 +8,7 @@ import '../../views/splash_screen/splash_screen.dart';
 import 'package:ticket_app/views/finish_screen/finish_screen.dart';
 import 'package:ticket_app/views/topic_screen/topic_list_screen.dart';
 import 'package:ticket_app/views/topic_screen/topic_screen.dart';
+import 'package:ticket_app/views/settings_screen/settings_screen.dart';
 
 Topic mockTopic = Topic(
   name: 'Flutter Development',
@@ -25,6 +26,7 @@ final Map<String, WidgetBuilder> routes = {
   '/topic': (context) => TopicScreenWidget(
         topic: mockTopic,
       ),
+  // '/settings': (context) => const SettingsScreenWidget(),
   // '/question': (context) => const QuestionViewWidget(),
   //'/finish': (context) => const FinishScreenWidget()
   // ... more routes

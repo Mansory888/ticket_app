@@ -34,6 +34,13 @@
   "QuestionWrong": "If you think this question is wrong, please tell us:",
   "ReportQuestion": "Report Question",
   "Send": "Send",
-  "Cancel": "Cancel"
-  
+  "Cancel": "Cancel",
+  "PaymentPlan": "Payment Plan",
+  "Status": "Status: Active",
+  "ExpiryDate": "Expires: 5 days",
+  "UpdatePlan" : "Update Plan",
+  "DarkMoid": "Dark Mode",
+  "EnableDarkMode": "Enable Dark Mode",
+  "Language": "Language",
+  "SelectLanguage": "Select Language"
 }

@@ -87,7 +87,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         fit: BoxFit.contain,
       );
     } else {
-      return SizedBox(); // Return an empty box if there are no questions
+      return const SizedBox(); // Return an empty box if there are no questions
     }
   }
 
@@ -108,9 +108,9 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
 
   TextStyle _getTextStyle(int index) {
     if (!answeredQuestions.containsKey(index)) {
-      return TextStyle(color: Colors.black);
+      return const TextStyle(color: Colors.black);
     }
-    return TextStyle(color: Colors.white);
+    return const TextStyle(color: Colors.white);
   }
 
   // Widget to display the current question text
@@ -121,7 +121,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.035),
       );
     } else {
-      return SizedBox(); // Return an empty box if there are no questions
+      return const SizedBox(); // Return an empty box if there are no questions
     }
   }
 
@@ -291,7 +291,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
               ),
             ),
             IconButton(
-              icon: Icon(Icons.error_outline),
+              icon: const Icon(Icons.error_outline),
               onPressed: () {
                 showModalBottomSheet(
                     context: context,

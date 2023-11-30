@@ -23,52 +23,65 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AlreadyHaveAccount":
-            MessageLookupByLibrary.simpleMessage("Already have an account?"),
-        "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "CreateAccount": MessageLookupByLibrary.simpleMessage("Create Account"),
-        "Exam": MessageLookupByLibrary.simpleMessage("Exam"),
-        "ExamComplete": MessageLookupByLibrary.simpleMessage("Exam Complete"),
-        "Home": MessageLookupByLibrary.simpleMessage("Home"),
-        "LogIn": MessageLookupByLibrary.simpleMessage("Log In"),
+            MessageLookupByLibrary.simpleMessage("Уже есть аккаунт?"),
+        "Cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
+        "CreateAccount":
+            MessageLookupByLibrary.simpleMessage("Создать аккаунт"),
+        "DarkMoid": MessageLookupByLibrary.simpleMessage("Темный режим"),
+        "EnableDarkMode":
+            MessageLookupByLibrary.simpleMessage("Включить темный режим"),
+        "Exam": MessageLookupByLibrary.simpleMessage("Экзамен"),
+        "ExamComplete":
+            MessageLookupByLibrary.simpleMessage("Экзамен завершен"),
+        "ExpiryDate": MessageLookupByLibrary.simpleMessage("Истекает: 5 дней"),
+        "Home": MessageLookupByLibrary.simpleMessage("Главная"),
+        "Language": MessageLookupByLibrary.simpleMessage("Язык"),
+        "LogIn": MessageLookupByLibrary.simpleMessage("Войти"),
+        "PaymentPlan": MessageLookupByLibrary.simpleMessage("Платежный план"),
         "QuestionWrong": MessageLookupByLibrary.simpleMessage(
-            "If you think this question is wrong, please tell us:"),
-        "Questions": MessageLookupByLibrary.simpleMessage("Questions"),
-        "Questionsyoufailed":
-            MessageLookupByLibrary.simpleMessage("Questions you failed:"),
-        "Register": MessageLookupByLibrary.simpleMessage("Register"),
+            "Если вы считаете, что этот вопрос неправильный, пожалуйста, сообщите нам:"),
+        "Questions": MessageLookupByLibrary.simpleMessage("Вопросы"),
+        "Questionsyoufailed": MessageLookupByLibrary.simpleMessage(
+            "Вопросы, которые вы не сдали:"),
+        "Register": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
         "RegisterAccount":
-            MessageLookupByLibrary.simpleMessage("Register Account"),
+            MessageLookupByLibrary.simpleMessage("Зарегистрировать аккаунт"),
         "ReportQuestion":
-            MessageLookupByLibrary.simpleMessage("Report Question"),
-        "Send": MessageLookupByLibrary.simpleMessage("Send"),
-        "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "Start": MessageLookupByLibrary.simpleMessage("Start"),
-        "Thatis": MessageLookupByLibrary.simpleMessage("That is"),
-        "Topics": MessageLookupByLibrary.simpleMessage("Topics"),
-        "UserName": MessageLookupByLibrary.simpleMessage("User Name"),
-        "Welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
+            MessageLookupByLibrary.simpleMessage("Сообщить о вопросе"),
+        "SelectLanguage": MessageLookupByLibrary.simpleMessage("Выберите язык"),
+        "Send": MessageLookupByLibrary.simpleMessage("Отправить"),
+        "Settings": MessageLookupByLibrary.simpleMessage("Настройки"),
+        "Start": MessageLookupByLibrary.simpleMessage("Начать"),
+        "Status": MessageLookupByLibrary.simpleMessage("Статус: Активный"),
+        "Thatis": MessageLookupByLibrary.simpleMessage("Это"),
+        "Topics": MessageLookupByLibrary.simpleMessage("Темы"),
+        "UpdatePlan": MessageLookupByLibrary.simpleMessage("Обновить план"),
+        "UserName": MessageLookupByLibrary.simpleMessage("Имя пользователя"),
+        "Welcome": MessageLookupByLibrary.simpleMessage("Добро пожаловать"),
         "Youhaveanswered":
-            MessageLookupByLibrary.simpleMessage("You have answered"),
-        "backtomenu": MessageLookupByLibrary.simpleMessage("back to menu"),
-        "emailAdress": MessageLookupByLibrary.simpleMessage("Email Address"),
+            MessageLookupByLibrary.simpleMessage("Вы ответили на"),
+        "backtomenu": MessageLookupByLibrary.simpleMessage("Вернуться в меню"),
+        "emailAdress":
+            MessageLookupByLibrary.simpleMessage("Адрес электронной почты"),
         "fillDetails":
-            MessageLookupByLibrary.simpleMessage("Fill your details"),
+            MessageLookupByLibrary.simpleMessage("Заполните ваши данные"),
         "forgotPassword":
-            MessageLookupByLibrary.simpleMessage("Forgot Password?"),
-        "leaderBoard": MessageLookupByLibrary.simpleMessage("Leader Board"),
+            MessageLookupByLibrary.simpleMessage("Забыли пароль?"),
+        "leaderBoard": MessageLookupByLibrary.simpleMessage("Таблица лидеров"),
         "letsGetStarted":
-            MessageLookupByLibrary.simpleMessage("Let’s Get Started"),
-        "newUser": MessageLookupByLibrary.simpleMessage("New User?"),
-        "notPassed": MessageLookupByLibrary.simpleMessage("Not Passed"),
-        "passed": MessageLookupByLibrary.simpleMessage("Passed"),
+            MessageLookupByLibrary.simpleMessage("Давайте начнем"),
+        "newUser": MessageLookupByLibrary.simpleMessage("Новый пользователь?"),
+        "notPassed": MessageLookupByLibrary.simpleMessage("Не сдано"),
+        "passed": MessageLookupByLibrary.simpleMessage("Сдано"),
         "passingExamMessage": MessageLookupByLibrary.simpleMessage(
-            "Passing the exam is more easier and faster with Discount"),
-        "password": MessageLookupByLibrary.simpleMessage("Password"),
+            "Сдача экзамена становится проще и быстрее с скидкой"),
+        "password": MessageLookupByLibrary.simpleMessage("Пароль"),
         "questionscorrectly":
-            MessageLookupByLibrary.simpleMessage("questions correctly."),
-        "retry": MessageLookupByLibrary.simpleMessage("Try again"),
+            MessageLookupByLibrary.simpleMessage("вопросов правильно."),
+        "retry": MessageLookupByLibrary.simpleMessage("Попробовать еще раз"),
         "startTheJourney":
-            MessageLookupByLibrary.simpleMessage("Start the Journey"),
-        "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back !")
+            MessageLookupByLibrary.simpleMessage("Начать путешествие"),
+        "welcomeBack":
+            MessageLookupByLibrary.simpleMessage("Добро пожаловать назад!")
       };
 }

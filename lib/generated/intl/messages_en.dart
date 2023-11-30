@@ -26,10 +26,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "CreateAccount": MessageLookupByLibrary.simpleMessage("Create Account"),
+        "DarkMoid": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+        "EnableDarkMode":
+            MessageLookupByLibrary.simpleMessage("Enable Dark Mode"),
         "Exam": MessageLookupByLibrary.simpleMessage("Exam"),
         "ExamComplete": MessageLookupByLibrary.simpleMessage("Exam Complete"),
+        "ExpiryDate": MessageLookupByLibrary.simpleMessage("Expires: 5 days"),
         "Home": MessageLookupByLibrary.simpleMessage("Home"),
+        "Language": MessageLookupByLibrary.simpleMessage("Language"),
         "LogIn": MessageLookupByLibrary.simpleMessage("Log In"),
+        "PaymentPlan": MessageLookupByLibrary.simpleMessage("Payment Plan"),
         "QuestionWrong": MessageLookupByLibrary.simpleMessage(
             "If you think this question is wrong, please tell us:"),
         "Questions": MessageLookupByLibrary.simpleMessage("Questions"),
@@ -40,11 +46,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Register Account"),
         "ReportQuestion":
             MessageLookupByLibrary.simpleMessage("Report Question"),
+        "SelectLanguage":
+            MessageLookupByLibrary.simpleMessage("Select Language"),
         "Send": MessageLookupByLibrary.simpleMessage("Send"),
         "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "Start": MessageLookupByLibrary.simpleMessage("Start"),
+        "Status": MessageLookupByLibrary.simpleMessage("Status: Active"),
         "Thatis": MessageLookupByLibrary.simpleMessage("That is"),
         "Topics": MessageLookupByLibrary.simpleMessage("Topics"),
+        "UpdatePlan": MessageLookupByLibrary.simpleMessage("Update Plan"),
         "UserName": MessageLookupByLibrary.simpleMessage("User Name"),
         "Welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
         "Youhaveanswered":

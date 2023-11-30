@@ -7,12 +7,28 @@ import 'generated/l10n.dart';
 
 void main() => runApp(MyApp());
 
+Locale _selectedLocale = Locale('en', 'US'); // Default locale
+
+void _updateLocale(String language) {
+  switch (language) {
+    case 'English':
+      _selectedLocale = const Locale('en', 'US');
+      break;
+    case 'Lithuanian':
+      _selectedLocale = const Locale('lt', 'LT');
+      break;
+    case 'Russian':
+      _selectedLocale = const Locale('ru', 'RU');
+      break;
+  }
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Flutter App',
-      locale: Locale('en', 'US'),
+      locale: _selectedLocale,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -24,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       routes: routes,
-      initialRoute: '/topic',
+      initialRoute: '/',
     );
   }
 }

@@ -409,6 +409,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Payment Plan`
+  String get PaymentPlan {
+    return Intl.message(
+      'Payment Plan',
+      name: 'PaymentPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status: Active`
+  String get Status {
+    return Intl.message(
+      'Status: Active',
+      name: 'Status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expires: 5 days`
+  String get ExpiryDate {
+    return Intl.message(
+      'Expires: 5 days',
+      name: 'ExpiryDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Plan`
+  String get UpdatePlan {
+    return Intl.message(
+      'Update Plan',
+      name: 'UpdatePlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark Mode`
+  String get DarkMoid {
+    return Intl.message(
+      'Dark Mode',
+      name: 'DarkMoid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Dark Mode`
+  String get EnableDarkMode {
+    return Intl.message(
+      'Enable Dark Mode',
+      name: 'EnableDarkMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get Language {
+    return Intl.message(
+      'Language',
+      name: 'Language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Language`
+  String get SelectLanguage {
+    return Intl.message(
+      'Select Language',
+      name: 'SelectLanguage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

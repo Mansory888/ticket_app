@@ -35,22 +35,23 @@ Future<void> persistUserData(
 }
 
 // Retrieving user data
-Future<Map<String, String?>> getUserData() async {
+Future<User> getUserData() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString('auth_token');
   String? username = prefs.getString('username');
   String? email = prefs.getString('email');
 
-  return {
-    'token': token,
-    'username': username,
-    'email': email,
-  };
+  return User(
+    userId: 0,
+    username: username ?? '', // Providing a default value if null
+    email: email ?? '',
+    password: "", // This should be handled carefully
+    languageId: 0,
+  );
 }
 
 // Checking the token and user data at app startup
 Future<bool> checkUserData() async {
-  final Map<String, String?> userData = await getUserData();
-  final String? token = userData['token'];
-  return token != null; // Return true if token exists, false otherwise
+  final User userData = await getUserData();
+  return userData.email.isNotEmpty;
 }
