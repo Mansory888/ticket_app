@@ -54,7 +54,7 @@ class _MainScreenWidget extends State<MainScreenWidget> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromRGBO(249, 249, 249, 1),
         automaticallyImplyLeading: false,
         elevation: 0,
         shadowColor: Colors.transparent,

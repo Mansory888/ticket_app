@@ -7,6 +7,8 @@ import '../question_view/question_view.dart';
 import '../topic_screen/topic_list_screen.dart';
 import '../../services/api/user_service.dart';
 import 'package:ticket_app/main.dart';
+import 'package:provider/provider.dart';
+import '../../provider.dart';
 
 class SettingsScreenWidget extends StatefulWidget {
   final User? user;
@@ -28,6 +30,19 @@ class _SettingsScreenWidget extends State<SettingsScreenWidget> {
     setState(() {
       user = widget.user;
     });
+  }
+
+  Locale getLocaleForLanguage(String language) {
+    switch (language) {
+      case 'English':
+        return const Locale('en');
+      case 'Lithuanian':
+        return const Locale('lt');
+      case 'Russian':
+        return const Locale('ru');
+      default:
+        return const Locale('en');
+    }
   }
 
   @override
@@ -136,10 +151,14 @@ class _SettingsScreenWidget extends State<SettingsScreenWidget> {
                   child: DropdownButton<String>(
                     value: selectedValue,
                     onChanged: (newValue) {
-                      // Update the state with the new selected value
-                      setState(() {
-                        selectedValue = newValue!;
-                      });
+                      if (newValue != null) {
+                        setState(() {
+                          selectedValue = newValue;
+                        });
+                        Locale newLocale = getLocaleForLanguage(newValue);
+                        Provider.of<LocaleProvider>(context, listen: false)
+                            .setLocale(newLocale);
+                      }
                     },
                     items: dropdownItems
                         .map<DropdownMenuItem<String>>((String value) {

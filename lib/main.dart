@@ -4,31 +4,27 @@ import 'package:ticket_app/themes/light_theme.dart';
 import 'core/utils/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/l10n.dart';
+import 'provider.dart' as provider;
+import 'package:provider/provider.dart';
+import 'provider.dart';
 
-void main() => runApp(MyApp());
-
-Locale _selectedLocale = Locale('en', 'US'); // Default locale
-
-void _updateLocale(String language) {
-  switch (language) {
-    case 'English':
-      _selectedLocale = const Locale('en', 'US');
-      break;
-    case 'Lithuanian':
-      _selectedLocale = const Locale('lt', 'LT');
-      break;
-    case 'Russian':
-      _selectedLocale = const Locale('ru', 'RU');
-      break;
-  }
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LocaleProvider(Locale('en')), // default locale
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final locale = Provider.of<LocaleProvider>(context).locale;
+
     return MaterialApp(
       title: 'My Flutter App',
-      locale: _selectedLocale,
+      locale: locale,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
