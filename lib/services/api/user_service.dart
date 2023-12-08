@@ -26,12 +26,14 @@ Future<Map<String, dynamic>> loginUser(Map<String, dynamic> credentials) async {
 }
 
 // Saving user data
-Future<void> persistUserData(
-    String token, String username, String email) async {
+Future<void> persistUserData(String token, String username, String email,
+    int languageid, int userId) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('auth_token', token);
   await prefs.setString('username', username);
   await prefs.setString('email', email);
+  await prefs.setInt('Language', languageid);
+  await prefs.setInt('userId', userId);
 }
 
 // Retrieving user data
@@ -40,13 +42,15 @@ Future<User> getUserData() async {
   String? token = prefs.getString('auth_token');
   String? username = prefs.getString('username');
   String? email = prefs.getString('email');
+  int? languageId = prefs.getInt('Language');
+  int? userId = prefs.getInt('userId');
 
   return User(
-    userId: 0,
+    userId: userId ?? 0,
     username: username ?? '', // Providing a default value if null
     email: email ?? '',
     password: "", // This should be handled carefully
-    languageId: 0,
+    languageId: languageId ?? 1,
   );
 }
 

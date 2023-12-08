@@ -43,7 +43,9 @@ class _MainScreenWidget extends State<MainScreenWidget> {
     setState(() {
       user = userData;
       _widgetOptions = [
-        const MainScreenBodyWidget(),
+        MainScreenBodyWidget(
+          user: user,
+        ),
         SettingsScreenWidget(user: user),
       ];
     });

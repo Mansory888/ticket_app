@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const BASE_URL = 'http://localhost:3000/drivingexam/v1/';
+const BASE_URL = 'http://144.91.86.43:3000/drivingexam/v1/';
 
 Future<http.Response> postRequest(
     String endpoint, Map<String, dynamic> data) async {

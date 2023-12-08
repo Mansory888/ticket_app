@@ -13,4 +13,17 @@ class LocaleProvider extends ChangeNotifier {
     _locale = locale;
     notifyListeners();
   }
+
+   int getLanguageId() {
+    switch (_locale.languageCode) {
+      case 'en':
+        return 1;
+      case 'ru':
+        return 2;
+      case 'lt':
+        return 3;
+      default:
+        return 0; 
+    }
+  }
 }

@@ -5,25 +5,40 @@ import '../../services/api/question_service.dart';
 import '../question_view/question_view.dart';
 import '../topic_screen/topic_list_screen.dart';
 import 'package:ticket_app/views/settings_screen/settings_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:ticket_app/models/user.dart';
 
 class MainScreenBodyWidget extends StatefulWidget {
-  const MainScreenBodyWidget({super.key});
+  final User? user;
+
+  const MainScreenBodyWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MainScreenBodyWidget> createState() => _MainScreenBodyWidget();
 }
 
 class _MainScreenBodyWidget extends State<MainScreenBodyWidget> {
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      user = widget.user;
+    });
+  }
+
   void loadExam() async {
     try {
-      var loadedQuestions = await getExam();
+      var mockExam = await getExam(user!.userId ?? 0, user!.languageId ?? 1);
 
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => QuestionViewWidget(
-            questions: loadedQuestions,
+            questions: mockExam.questions!.questions,
             isExam: true,
+            mockExam: mockExam,
           ),
         ),
       );

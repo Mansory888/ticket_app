@@ -10,22 +10,15 @@ import 'package:ticket_app/views/topic_screen/topic_list_screen.dart';
 import 'package:ticket_app/views/topic_screen/topic_screen.dart';
 import 'package:ticket_app/views/settings_screen/settings_screen.dart';
 
-Topic mockTopic = Topic(
-  name: 'Flutter Development',
-  description:
-      'A comprehensive guide to building mobile applications using Flutter.',
-  image: 'https://example.com/flutter_development_image.jpg',
-);
-
 final Map<String, WidgetBuilder> routes = {
   '/': (context) => const SpashScreenWidget(),
   '/login': (context) => const LoginScreenWidget(),
   '/register': (context) => const RegisterScreenWidget(),
   '/main': (context) => const MainScreenWidget(),
   '/topicList': (context) => const TopicListScreenWidget(),
-  '/topic': (context) => TopicScreenWidget(
-        topic: mockTopic,
-      ),
+  // '/topic': (context) => TopicScreenWidget(
+  //       topic: mockTopic,
+  //     ),
   // '/settings': (context) => const SettingsScreenWidget(),
   // '/question': (context) => const QuestionViewWidget(),
   //'/finish': (context) => const FinishScreenWidget()

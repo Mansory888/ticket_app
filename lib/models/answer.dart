@@ -3,12 +3,14 @@ part 'answer.g.dart';
 
 @JsonSerializable()
 class Answer {
+  final int id;
   final String answer;
   final int questionId;
   @JsonKey(name: 'is_correct')
   final bool isCorrect;
 
   Answer({
+    required this.id,
     required this.answer,
     required this.questionId,
     required this.isCorrect,

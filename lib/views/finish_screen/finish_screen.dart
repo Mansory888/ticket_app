@@ -100,17 +100,17 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var loadedQuestions = await getExam();
+                  // var loadedQuestions = await getExam();
 
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuestionViewWidget(
-                        questions: loadedQuestions,
-                        isExam: true,
-                      ),
-                    ),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => QuestionViewWidget(
+                  //       questions: loadedQuestions,
+                  //       isExam: true,
+                  //     ),
+                  //   ),
+                  // );
                 },
                 child: Text(S.of(context).retry),
               ),

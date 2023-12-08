@@ -25,7 +25,12 @@ class _LoginScreenWidget extends State<LoginScreenWidget> {
 
       if (login.containsKey('token')) {
         await persistUserData(
-            login['token'], login['username'], login['email']);
+          login['token'],
+          login['username'],
+          login['email'],
+          login['language_id'],
+          login['id'],
+        );
 
         print('User logged successfully:' + login.toString());
         Navigator.pushReplacementNamed(context, '/main');

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/models/question_list.dart';
 import '../../generated/l10n.dart';
 import '../../services/api/question_service.dart';
 import '/models/topic.dart';
 import '/models/question.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../services/api/question_service.dart';
+import '../question_view/question_view.dart';
+import 'package:ticket_app/models/user.dart';
+import '../../services/api/user_service.dart';
 
 class TopicScreenWidget extends StatefulWidget {
   final Topic topic;
@@ -16,7 +20,8 @@ class TopicScreenWidget extends StatefulWidget {
 }
 
 class _TopicScreenWidget extends State<TopicScreenWidget> {
-  List<Question> questions = [];
+  QuestionList? questions;
+  int numberOfQuestions = 0;
   late Topic topic;
 
   @override
@@ -27,23 +32,47 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
   }
 
   Future<void> _getQuestionsForTopic() async {
-    var loadedQuestions = await getExam();
-
-    var multipliedQuestions = <Question>[];
-    for (var question in loadedQuestions) {
-      for (int i = 0; i < 20; i++) {
-        multipliedQuestions.add(question);
-      }
-    }
+    User userData = await getUserData();
+    var loadedQuestions =
+        await getQuestionsByTopicId(topic.id, userData.userId ?? 0);
 
     setState(() {
-      questions = multipliedQuestions;
+      questions = loadedQuestions;
+      numberOfQuestions = loadedQuestions.questions.length;
     });
   }
 
+  void loadTopicTrial() {
+    try {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QuestionViewWidget(
+            questions: questions!.questions,
+            isExam: false,
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   List<PieChartSectionData> _getSections() {
-    double passedPercentage = 65; //
-    double notPassedPercentage = 100 - passedPercentage;
+    double passedPercentage = 0;
+    double notPassedPercentage = 0;
+
+    if (questions != null && questions!.questions.isNotEmpty) {
+      int passedCount = 0;
+      for (Question question in questions!.questions) {
+        if (question.status == "passed") {
+          passedCount++;
+        }
+      }
+
+      passedPercentage = (passedCount / questions!.questions.length) * 100;
+      notPassedPercentage = 100 - passedPercentage;
+    }
 
     return [
       PieChartSectionData(
@@ -61,14 +90,17 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
     ];
   }
 
-  Color? _getCellColor(int index) {}
+  Color? _getCellColor(int index) {
+    if (questions != null && questions!.questions[index].status == "passed") {
+      return Colors.green;
+    }
+  }
 
   TextStyle _getTextStyle(int index) {
-    // if (!answeredQuestions.containsKey(index)) {
-    //   return TextStyle(color: Colors.black);
-    // }
-    // return TextStyle(color: Colors.white);
-    return TextStyle(color: Colors.black);
+    if (questions != null && questions!.questions[index].status == "passed") {
+      return const TextStyle(color: Colors.white);
+    }
+    return const TextStyle(color: Colors.black);
   }
 
   @override
@@ -106,7 +138,7 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
                   shrinkWrap: true,
                   physics:
                       NeverScrollableScrollPhysics(), // Disable GridView's own scroll
-                  itemCount: questions.length,
+                  itemCount: numberOfQuestions,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 7, // Adjusted for visibility
                     childAspectRatio: 1 / 1,
@@ -117,7 +149,7 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
                     return InkWell(
                       onTap: () => "",
                       child: Container(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                           color: _getCellColor(
                               index), // Change color based on answer status
@@ -202,7 +234,9 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
           Container(
             margin: const EdgeInsets.only(top: 40),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                loadTopicTrial();
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 minimumSize: const Size(325, 60),
@@ -211,7 +245,7 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
                 ),
               ),
               child: Text(
-                "Start",
+                S.of(context).Start,
                 style: const TextStyle(fontSize: 16),
               ),
             ),

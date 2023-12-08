@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/models/mock_exam.dart';
 import 'package:ticket_app/models/question.dart';
 import '../../generated/l10n.dart';
 import '../../models/answer.dart';
 import 'dart:convert';
 import 'package:ticket_app/views/finish_screen/finish_screen.dart';
 import '../../services/api/question_service.dart';
+import 'dart:async';
 
 class QuestionViewWidget extends StatefulWidget {
   final List<Question> questions;
+  final MockExam? mockExam;
   final bool isExam;
 
   const QuestionViewWidget(
-      {Key? key, required this.questions, required this.isExam})
+      {Key? key, required this.questions, required this.isExam, this.mockExam})
       : super(key: key);
 
   @override
@@ -24,16 +27,23 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   Map<int, bool?> answeredQuestions = {};
   Map<int, int?> selectedAnswers = {};
   bool isExam = false;
+  MockExam? mockExam;
+  late Timer _timer;
+  int _remainingTime = 30 * 60;
 
   @override
   void initState() {
     super.initState();
-    // Now, questions are already provided by the parent widget
-    // So, you can directly use them instead of loading from 'loadExam'
+
     setState(() {
       questions = widget.questions;
       isExam = widget.isExam;
+      mockExam = widget.mockExam;
     });
+
+    if (isExam) {
+      startTimer();
+    }
   }
 
   void goToQuestion(int index, bool table) {
@@ -47,6 +57,24 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
     }
   }
 
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (_remainingTime <= 0) {
+        timer.cancel(); // Stop the timer if it reaches zero
+      } else {
+        setState(() {
+          _remainingTime--;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when widget is disposed
+    super.dispose();
+  }
+
   // Call this method when an answer is selected
   void answerQuestion(int questionIndex, int asnwerIndex, bool isCorrect) {
     setState(() {
@@ -55,16 +83,20 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
     });
 
     if (answeredQuestions.length == questions.length) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => FinishScreenWidget(
-            questions: questions,
-            answeredQuestions: answeredQuestions,
-          ),
-        ),
-      );
+      finishExam();
     }
+  }
+
+  void finishExam() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FinishScreenWidget(
+          questions: questions,
+          answeredQuestions: answeredQuestions,
+        ),
+      ),
+    );
   }
 
   void goToPreviousQuestion() {
@@ -191,18 +223,21 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    int minutes = _remainingTime ~/ 60;
+    int seconds = _remainingTime % 60;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        backgroundColor: Colors.red,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         shadowColor: Colors.transparent,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(S.of(context).Exam), // First text element
-            Text('10:50'),
+            Text('$minutes:${seconds.toString().padLeft(2, '0')}'),
             Container(
                 margin: const EdgeInsets.fromLTRB(
                     16.0, 4, 16.0, 0), // Add horizontal padding

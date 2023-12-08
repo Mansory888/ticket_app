@@ -7,6 +7,7 @@ part of 'question.dart';
 // **************************************************************************
 
 Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
+      id: json['id'] as int,
       question: json['question'] as String,
       topicId: json['topic_id'] as int,
       image: json['image'] as String,
@@ -14,14 +15,15 @@ Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       answers: (json['answers'] as List<dynamic>)
           .map((e) => Answer.fromJson(e as Map<String, dynamic>))
           .toList(),
-      topic: Topic.fromJson(json['topic'] as Map<String, dynamic>),
+      status: json['status'] as String,
     );
 
 Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
+      'id': instance.id,
       'question': instance.question,
       'topic_id': instance.topicId,
       'image': instance.image,
       'explanation': instance.explanation,
       'answers': instance.answers,
-      'topic': instance.topic,
+      'status': instance.status,
     };
