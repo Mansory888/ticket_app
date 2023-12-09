@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Start": MessageLookupByLibrary.simpleMessage("Начать"),
         "Status": MessageLookupByLibrary.simpleMessage("Статус: Активный"),
         "Thatis": MessageLookupByLibrary.simpleMessage("Это"),
+        "Topic": MessageLookupByLibrary.simpleMessage("Тема"),
         "Topics": MessageLookupByLibrary.simpleMessage("Темы"),
         "UpdatePlan": MessageLookupByLibrary.simpleMessage("Обновить план"),
         "UserName": MessageLookupByLibrary.simpleMessage("Имя пользователя"),

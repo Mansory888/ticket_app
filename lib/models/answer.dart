@@ -16,6 +16,11 @@ class Answer {
     required this.isCorrect,
   });
 
+  factory Answer.noAnswer() {
+    return Answer(
+        id: 0, answer: 'No correct answer', questionId: 0, isCorrect: false);
+  }
+
   factory Answer.fromJson(Map<String, dynamic> json) => _$AnswerFromJson(json);
   Map<String, dynamic> toJson() => _$AnswerToJson(this);
 }

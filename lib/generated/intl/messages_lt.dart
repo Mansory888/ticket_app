@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Start": MessageLookupByLibrary.simpleMessage("Pradėti"),
         "Status": MessageLookupByLibrary.simpleMessage("Statusas: Aktyvus"),
         "Thatis": MessageLookupByLibrary.simpleMessage("Tai yra"),
+        "Topic": MessageLookupByLibrary.simpleMessage("Temo"),
         "Topics": MessageLookupByLibrary.simpleMessage("Temos"),
         "UpdatePlan": MessageLookupByLibrary.simpleMessage("Atnaujinti planą"),
         "UserName": MessageLookupByLibrary.simpleMessage("Vartotojo vardas"),

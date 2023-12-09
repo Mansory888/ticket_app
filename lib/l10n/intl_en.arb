@@ -42,5 +42,6 @@
   "DarkMoid": "Dark Mode",
   "EnableDarkMode": "Enable Dark Mode",
   "Language": "Language",
-  "SelectLanguage": "Select Language"
+  "SelectLanguage": "Select Language",
+  "Topic": "Topic"
 }

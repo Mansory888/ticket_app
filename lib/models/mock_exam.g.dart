@@ -7,8 +7,8 @@ part of 'mock_exam.dart';
 // **************************************************************************
 
 MockExam _$MockExamFromJson(Map<String, dynamic> json) => MockExam(
-      id: json['id'] as int,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      id: json['id'] as int?,
+      user_id: json['user_id'] as int?,
       percentage: json['percentage'] as int,
       questions: json['questions'] == null
           ? null
@@ -25,7 +25,7 @@ MockExam _$MockExamFromJson(Map<String, dynamic> json) => MockExam(
 
 Map<String, dynamic> _$MockExamToJson(MockExam instance) => <String, dynamic>{
       'id': instance.id,
-      'user': instance.user,
+      'user_id': instance.user_id,
       'percentage': instance.percentage,
       'completion_date': instance.completion_date?.toIso8601String(),
       'questions': instance.questions,

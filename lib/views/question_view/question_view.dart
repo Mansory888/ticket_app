@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/models/mock_exam.dart';
 import 'package:ticket_app/models/question.dart';
+import 'package:ticket_app/models/question_list.dart';
 import '../../generated/l10n.dart';
 import '../../models/answer.dart';
 import 'dart:convert';
 import 'package:ticket_app/views/finish_screen/finish_screen.dart';
 import '../../services/api/question_service.dart';
 import 'dart:async';
+import 'package:ticket_app/models/user.dart';
+import '../../services/api/user_service.dart';
 
 class QuestionViewWidget extends StatefulWidget {
   final List<Question> questions;
@@ -28,7 +31,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   Map<int, int?> selectedAnswers = {};
   bool isExam = false;
   MockExam? mockExam;
-  late Timer _timer;
+  Timer? _timer;
   int _remainingTime = 30 * 60;
 
   @override
@@ -36,13 +39,15 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
     super.initState();
 
     setState(() {
-      questions = widget.questions;
+      questions = [...widget.questions];
       isExam = widget.isExam;
       mockExam = widget.mockExam;
     });
 
     if (isExam) {
       startTimer();
+      mockExam!.answered_questions =
+          QuestionList(questions: [], totalQuestions: questions.length);
     }
   }
 
@@ -60,7 +65,8 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (_remainingTime <= 0) {
-        timer.cancel(); // Stop the timer if it reaches zero
+        finishExam();
+        timer.cancel();
       } else {
         setState(() {
           _remainingTime--;
@@ -71,7 +77,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
 
   @override
   void dispose() {
-    _timer.cancel(); // Cancel the timer when widget is disposed
+    _timer?.cancel(); // Cancel the timer when widget is disposed
     super.dispose();
   }
 
@@ -85,6 +91,24 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
     if (answeredQuestions.length == questions.length) {
       finishExam();
     }
+
+    if (isExam) {
+      Question question = questions[questionIndex];
+      Answer answer = question.answers[asnwerIndex];
+
+      question.answers.clear();
+      question.answers.add(answer);
+      mockExam!.answered_questions!.questions.add(question);
+    }
+
+    if (!isExam) {
+      _chckQuestion(questions[questionIndex]);
+    }
+  }
+
+  Future<void> _chckQuestion(Question question) async {
+    User userData = await getUserData();
+    await postQuestion(question, userData.userId!);
   }
 
   void finishExam() {
@@ -94,6 +118,8 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         builder: (context) => FinishScreenWidget(
           questions: questions,
           answeredQuestions: answeredQuestions,
+          isExam: isExam,
+          mockExam: mockExam,
         ),
       ),
     );
@@ -236,7 +262,9 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(S.of(context).Exam), // First text element
+            isExam
+                ? Text(S.of(context).Exam)
+                : Text(S.of(context).Topic), // First text element
             Text('$minutes:${seconds.toString().padLeft(2, '0')}'),
             Container(
                 margin: const EdgeInsets.fromLTRB(

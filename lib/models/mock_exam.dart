@@ -6,17 +6,17 @@ part 'mock_exam.g.dart';
 
 @JsonSerializable()
 class MockExam {
-  final int id;
-  final User user;
+  final int? id;
+  final int? user_id;
   final int percentage;
   final DateTime? completion_date;
   final QuestionList? questions;
   final int? points;
-  final QuestionList? answered_questions;
+  QuestionList? answered_questions;
 
   MockExam({
-    required this.id,
-    required this.user,
+    this.id,
+    required this.user_id,
     required this.percentage,
     this.questions,
     this.completion_date,

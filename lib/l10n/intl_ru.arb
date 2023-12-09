@@ -42,5 +42,6 @@
   "DarkMoid": "Темный режим",
   "EnableDarkMode": "Включить темный режим",
   "Language": "Язык",
-  "SelectLanguage": "Выберите язык"
+  "SelectLanguage": "Выберите язык",
+  "Topic": "Тема"
 }

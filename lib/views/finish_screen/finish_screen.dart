@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/models/mock_exam.dart';
 import '../../generated/l10n.dart';
 import 'package:ticket_app/models/question.dart';
 import 'package:ticket_app/models/answer.dart';
@@ -6,13 +7,21 @@ import 'package:ticket_app/models/topic.dart';
 import '../../services/api/question_service.dart';
 import '../question_view/question_view.dart';
 import 'package:ticket_app/views/main_screen/main_screen.dart';
+import 'package:ticket_app/models/user.dart';
+import '../../services/api/user_service.dart';
 
 class FinishScreenWidget extends StatefulWidget {
   final List<Question> questions;
   final Map<int, bool?> answeredQuestions;
+  final MockExam? mockExam;
+  final bool isExam;
 
   const FinishScreenWidget(
-      {Key? key, required this.questions, required this.answeredQuestions})
+      {Key? key,
+      required this.questions,
+      required this.isExam,
+      required this.answeredQuestions,
+      this.mockExam})
       : super(key: key);
 
   @override
@@ -23,8 +32,11 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
   int passedQ = 0;
   int lengthQ = 0;
   int percentage = 0;
+  MockExam? mockExam;
   List<Question> questions = [];
+  List<Question> failedQuestions = [];
   Map<int, bool?> answeredQuestions = {};
+  bool isExam = false;
 
   @override
   void initState() {
@@ -33,12 +45,54 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
     setState(() {
       questions = widget.questions;
       answeredQuestions = widget.answeredQuestions;
+      mockExam = widget.mockExam;
       passedQ = widget.answeredQuestions.values
           .where((element) => element == true)
           .length;
       lengthQ = widget.questions.length;
       percentage = (passedQ / lengthQ * 100).round();
+      isExam = widget.isExam;
+
+      sortQuestions();
+      if (isExam) {
+        checkExam();
+      }
     });
+  }
+
+  void sortQuestions() {
+    for (var i = 0; i < questions.length; i++) {
+      if (answeredQuestions[i] != true) {
+        failedQuestions.add(questions[i]);
+      }
+    }
+  }
+
+  void checkExam() async {
+    if (mockExam != null) {
+      mockExam = await postMockExam(mockExam!);
+    }
+  }
+
+  void loadExam() async {
+    try {
+      User userData = await getUserData();
+      var mockExam =
+          await getExam(userData.userId ?? 0, userData.languageId ?? 1);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QuestionViewWidget(
+            questions: mockExam.questions!.questions,
+            isExam: true,
+            mockExam: mockExam,
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -98,22 +152,13 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
                 },
                 child: Text(S.of(context).backtomenu),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  // var loadedQuestions = await getExam();
-
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => QuestionViewWidget(
-                  //       questions: loadedQuestions,
-                  //       isExam: true,
-                  //     ),
-                  //   ),
-                  // );
-                },
-                child: Text(S.of(context).retry),
-              ),
+              if (isExam)
+                ElevatedButton(
+                  onPressed: () async {
+                    loadExam();
+                  },
+                  child: Text(S.of(context).retry),
+                ),
             ],
           ),
           const SizedBox(height: 30),
@@ -133,8 +178,16 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: questions.length,
+              itemCount: failedQuestions.length,
               itemBuilder: (context, index) {
+                var correctAnswer = failedQuestions[index].answers.firstWhere(
+                    (element) => element.isCorrect == true,
+                    orElse: () => Answer.noAnswer());
+
+                var subtitleText = correctAnswer.answer == "No correct answer"
+                    ? correctAnswer.answer
+                    : 'No correct answer';
+
                 return Container(
                   padding: const EdgeInsets.only(
                     left: 5.0,
@@ -147,17 +200,13 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
                           .start, // Align children to the start of the column
                       children: <Widget>[
                         ListTile(
-                          title: Text(questions[index].question),
-                          subtitle: Text(questions[index]
-                              .answers
-                              .where((element) => element.isCorrect == true)
-                              .first
-                              .answer),
+                          title: Text(failedQuestions[index].question),
+                          subtitle: Text(subtitleText),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
                           child: Text(
-                            questions[index]
+                            failedQuestions[index]
                                 .explanation, // Replace with your text
                             style: TextStyle(
                                 fontSize:
