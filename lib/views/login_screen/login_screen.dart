@@ -32,21 +32,10 @@ class _LoginScreenWidget extends State<LoginScreenWidget> {
           login['id'],
         );
 
-        print('User logged successfully:' + login.toString());
         Navigator.pushReplacementNamed(context, '/main');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.red, // Change this to your desired color
-          content: Text(
-            '$e',
-            style: const TextStyle(
-              fontSize: 18.0, // Adjust the font size here
-            ),
-          ),
-        ),
-      );
+      showSnackBar(e.toString());
     }
   }
 
@@ -55,6 +44,20 @@ class _LoginScreenWidget extends State<LoginScreenWidget> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  void showSnackBar(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red, // Change this to your desired color
+        content: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 18.0, // Adjust the font size here
+          ),
+        ),
+      ),
+    );
   }
 
   @override

@@ -39,24 +39,26 @@ class _RegisterScreenWidget extends State<RegisterScreenWidget> {
         );
       } else {
         final registeredUserMap = await registerUser(user.toJson());
-        print('User registered successfully:' + registeredUserMap);
+        showSnackBar("User $usernameController.text registered successfully!");
         Navigator.pop(context);
       }
-
-      // Handle the success scenario, e.g., navigate to another screen
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.red, // Change this to your desired color
-          content: Text(
-            '$e',
-            style: const TextStyle(
-              fontSize: 18.0, // Adjust the font size here
-            ),
+      showSnackBar(e.toString());
+    }
+  }
+
+  void showSnackBar(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red, // Change this to your desired color
+        content: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 18.0, // Adjust the font size here
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 
   @override

@@ -14,9 +14,10 @@ class SpashScreenWidget extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0,
         shadowColor: Colors.transparent,
-        toolbarHeight: 40.0,
+        toolbarHeight: 1,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Align(
             alignment: Alignment.topLeft,
@@ -28,7 +29,7 @@ class SpashScreenWidget extends StatelessWidget {
 
           Flexible(
             child: Container(
-              margin: const EdgeInsets.only(top: 30, bottom: 30),
+              margin: const EdgeInsets.only(top: 30),
               child: Image.network(
                 'https://media.istockphoto.com/id/1186972461/photo/generic-white-car-isolated-on-white-background.jpg?s=170667a&w=0&k=20&c=YBXP60_tIGgrs4LRT6oS64PYFlqBhN1Pqeh6heV9UFs=',
                 fit: BoxFit.cover,
@@ -42,7 +43,7 @@ class SpashScreenWidget extends StatelessWidget {
               S.of(context).startTheJourney,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 40,
+                fontSize: MediaQuery.of(context).size.height * 0.06,
                 color: Theme.of(context).colorScheme.tertiary,
               ),
               textAlign: TextAlign.center,
@@ -55,7 +56,7 @@ class SpashScreenWidget extends StatelessWidget {
             child: Text(
               S.of(context).passingExamMessage,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: MediaQuery.of(context).size.height * 0.025,
                 color: Theme.of(context).colorScheme.tertiary,
               ),
               textAlign: TextAlign.center,
@@ -63,7 +64,7 @@ class SpashScreenWidget extends StatelessWidget {
           ),
 
           Container(
-            margin: const EdgeInsets.only(top: 40),
+            margin: const EdgeInsets.only(top: 0),
             child: ElevatedButton(
               onPressed: () async {
                 bool isLoggedIn = await checkUserData();
@@ -76,7 +77,8 @@ class SpashScreenWidget extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
-                minimumSize: const Size(325, 60),
+                minimumSize:
+                    Size(325, MediaQuery.of(context).size.height * 0.10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
