@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/models/user.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../generated/l10n.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../services/api/question_service.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 import '../../provider.dart';
 
 class SettingsScreenWidget extends StatefulWidget {
-  final User? user;
+  final UserResponse? user;
 
   const SettingsScreenWidget({Key? key, required this.user}) : super(key: key);
 
@@ -22,7 +23,7 @@ class SettingsScreenWidget extends StatefulWidget {
 class _SettingsScreenWidget extends State<SettingsScreenWidget> {
   List<String> dropdownItems = ['English', 'Lithuanian', 'Russian'];
   String selectedValue = 'English';
-  User? user;
+  UserResponse? user;
 
   @override
   void initState() {
@@ -150,14 +151,40 @@ class _SettingsScreenWidget extends State<SettingsScreenWidget> {
                   padding: const EdgeInsets.only(right: 8),
                   child: DropdownButton<String>(
                     value: selectedValue,
-                    onChanged: (newValue) {
+                    onChanged: (newValue) async {
                       if (newValue != null) {
                         setState(() {
                           selectedValue = newValue;
                         });
                         Locale newLocale = getLocaleForLanguage(newValue);
+                        UserResponse login = await getUserData();
+                        int languageId = 0;
+
                         Provider.of<LocaleProvider>(context, listen: false)
                             .setLocale(newLocale);
+
+                        switch (newValue) {
+                          case 'English':
+                            languageId = 1;
+                            break;
+                          case 'Lithuanian':
+                            languageId = 2;
+                            break;
+                          case 'Russian':
+                            languageId = 3;
+                            break;
+                          default:
+                            languageId = 1;
+                            break;
+                        }
+
+                        await persistUserData(
+                          login.token ?? 'default-token',
+                          login.username,
+                          login.email,
+                          languageId,
+                          login.user_id ?? 0,
+                        );
                       }
                     },
                     items: dropdownItems

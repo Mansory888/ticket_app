@@ -7,6 +7,7 @@ import '../topic_screen/topic_list_screen.dart';
 import 'package:ticket_app/views/settings_screen/settings_screen.dart';
 import 'package:ticket_app/views/main_screen/main_screen_body.dart';
 import 'package:ticket_app/models/user.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../services/api/user_service.dart';
 
 class MainScreenWidget extends StatefulWidget {
@@ -30,7 +31,7 @@ class EmptyWidget extends StatelessWidget {
 class _MainScreenWidget extends State<MainScreenWidget> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = [const EmptyWidget(), const EmptyWidget()];
-  User? user;
+  UserResponse? user;
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _MainScreenWidget extends State<MainScreenWidget> {
   }
 
   Future<void> getUser() async {
-    User userData = await getUserData();
+    UserResponse userData = await getUserData();
     setState(() {
       user = userData;
       _widgetOptions = [

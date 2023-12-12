@@ -6,22 +6,20 @@ part 'mock_exam.g.dart';
 
 @JsonSerializable()
 class MockExam {
-  final int? id;
+  final int? mockexam_id;
   final int? user_id;
-  final int percentage;
+  final double percentage;
   final DateTime? completion_date;
   final QuestionList? questions;
   final int? points;
-  QuestionList? answered_questions;
 
   MockExam({
-    this.id,
+    this.mockexam_id,
     required this.user_id,
     required this.percentage,
     this.questions,
     this.completion_date,
     this.points,
-    this.answered_questions,
   });
 
   factory MockExam.fromJson(Map<String, dynamic> json) =>

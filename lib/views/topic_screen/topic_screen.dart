@@ -7,7 +7,7 @@ import '/models/question.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../services/api/question_service.dart';
 import '../question_view/question_view.dart';
-import 'package:ticket_app/models/user.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../services/api/user_service.dart';
 
 class TopicScreenWidget extends StatefulWidget {
@@ -32,9 +32,8 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
   }
 
   Future<void> _getQuestionsForTopic() async {
-    User userData = await getUserData();
-    var loadedQuestions =
-        await getQuestionsByTopicId(topic.id, userData.userId ?? 0);
+    UserResponse userData = await getUserData();
+    var loadedQuestions = await getQuestionsByTopicId(topic.topic_id);
 
     setState(() {
       questions = loadedQuestions;
@@ -61,30 +60,44 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
   List<PieChartSectionData> _getSections() {
     double passedPercentage = 0;
     double notPassedPercentage = 0;
+    double notAnsweredPercentage = 0;
 
     if (questions != null && questions!.questions.isNotEmpty) {
       int passedCount = 0;
+      int notAnswered = 0;
       for (Question question in questions!.questions) {
-        if (question.status == "passed") {
+        if (question.status == "correct") {
           passedCount++;
+        } else if (question.status == "unanswered") {
+          notAnswered++;
         }
       }
 
-      passedPercentage = (passedCount / questions!.questions.length) * 100;
-      notPassedPercentage = 100 - passedPercentage;
+      passedPercentage =
+          ((passedCount / questions!.questions.length) * 100).roundToDouble();
+      notAnsweredPercentage =
+          ((notAnswered / questions!.questions.length) * 100).roundToDouble();
+      notPassedPercentage =
+          (100 - passedPercentage - notAnsweredPercentage).roundToDouble();
     }
 
     return [
       PieChartSectionData(
         color: Colors.green,
         value: passedPercentage,
-        title: "$passedPercentage %",
+        title: "${passedPercentage.round()}%",
         radius: 40,
       ),
       PieChartSectionData(
         color: Colors.red,
         value: notPassedPercentage,
-        title: "$notPassedPercentage %",
+        title: "${notPassedPercentage.round()}%",
+        radius: 40,
+      ),
+      PieChartSectionData(
+        color: Colors.grey,
+        value: notAnsweredPercentage,
+        title: "${notAnsweredPercentage.round()}%",
         radius: 40,
       ),
     ];
@@ -210,6 +223,17 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
                           Text(S.of(context).notPassed),
                         ],
                       ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 20,
+                            height: 20,
+                            color: Colors.grey,
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                          ),
+                          Text(S.of(context).notAnswered),
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -235,7 +259,9 @@ class _TopicScreenWidget extends State<TopicScreenWidget> {
             margin: const EdgeInsets.only(top: 40),
             child: ElevatedButton(
               onPressed: () {
-                loadTopicTrial();
+                if (questions != null && questions!.questions.isNotEmpty) {
+                  loadTopicTrial();
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,

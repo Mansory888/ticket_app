@@ -499,6 +499,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Not Answered`
+  String get notAnswered {
+    return Intl.message(
+      'Not Answered',
+      name: 'notAnswered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Exam: Passed`
+  String get lastExamPassed {
+    return Intl.message(
+      'Last Exam: Passed',
+      name: 'lastExamPassed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Exam: Failed`
+  String get lastExamFailed {
+    return Intl.message(
+      'Last Exam: Failed',
+      name: 'lastExamFailed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

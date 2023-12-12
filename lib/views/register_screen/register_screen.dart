@@ -39,7 +39,8 @@ class _RegisterScreenWidget extends State<RegisterScreenWidget> {
         );
       } else {
         final registeredUserMap = await registerUser(user.toJson());
-        showSnackBar("User $usernameController.text registered successfully!");
+        showSnackBar(
+            "User " + usernameController.text + " registered successfully!");
         Navigator.pop(context);
       }
     } catch (e) {

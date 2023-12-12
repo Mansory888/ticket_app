@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/models/mock_exam.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../generated/l10n.dart';
 import 'package:ticket_app/models/question.dart';
 import 'package:ticket_app/models/answer.dart';
@@ -76,9 +77,8 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
 
   void loadExam() async {
     try {
-      User userData = await getUserData();
-      var mockExam =
-          await getExam(userData.userId ?? 0, userData.languageId ?? 1);
+      UserResponse userData = await getUserData();
+      var mockExam = await getExam(userData.language_id ?? 1);
 
       Navigator.push(
         context,
@@ -181,7 +181,7 @@ class _FinishScreenWidget extends State<FinishScreenWidget> {
               itemCount: failedQuestions.length,
               itemBuilder: (context, index) {
                 var correctAnswer = failedQuestions[index].answers.firstWhere(
-                    (element) => element.isCorrect == true,
+                    (element) => element.is_correct == true,
                     orElse: () => Answer.noAnswer());
 
                 var subtitleText = correctAnswer.answer == "No correct answer"

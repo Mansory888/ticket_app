@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:ticket_app/views/finish_screen/finish_screen.dart';
 import '../../services/api/question_service.dart';
 import 'dart:async';
-import 'package:ticket_app/models/user.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../services/api/user_service.dart';
 
 class QuestionViewWidget extends StatefulWidget {
@@ -46,8 +46,8 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
 
     if (isExam) {
       startTimer();
-      mockExam!.answered_questions =
-          QuestionList(questions: [], totalQuestions: questions.length);
+      // mockExam!.answered_questions =
+      //     QuestionList(questions: [], totalQuestions: questions.length);
     }
   }
 
@@ -92,14 +92,10 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
       finishExam();
     }
 
-    if (isExam) {
-      Question question = questions[questionIndex];
-      Answer answer = question.answers[asnwerIndex];
+    Question question = questions[questionIndex];
+    Answer answer = question.answers[asnwerIndex];
 
-      question.answers.clear();
-      question.answers.add(answer);
-      mockExam!.answered_questions!.questions.add(question);
-    }
+    answer.selected = true;
 
     if (!isExam) {
       _chckQuestion(questions[questionIndex]);
@@ -107,8 +103,8 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   }
 
   Future<void> _chckQuestion(Question question) async {
-    User userData = await getUserData();
-    await postQuestion(question, userData.userId!);
+    UserResponse userData = await getUserData();
+    await postQuestion(question);
   }
 
   void finishExam() {
@@ -218,7 +214,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
           child: ElevatedButton(
             onPressed: () {
               if (!isQuestionAnswered) {
-                answerQuestion(currentQuestionIndex, idx, answer.isCorrect);
+                answerQuestion(currentQuestionIndex, idx, answer.is_correct);
                 goToNextQuestion();
               }
             }, // Disable button if the question has been answered
@@ -262,10 +258,9 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            isExam
-                ? Text(S.of(context).Exam)
-                : Text(S.of(context).Topic), // First text element
-            Text('$minutes:${seconds.toString().padLeft(2, '0')}'),
+            isExam ? Text(S.of(context).Exam) : Text(S.of(context).Topic),
+            if (isExam) // First text element
+              Text('$minutes:${seconds.toString().padLeft(2, '0')}'),
             Container(
                 margin: const EdgeInsets.fromLTRB(
                     16.0, 4, 16.0, 0), // Add horizontal padding

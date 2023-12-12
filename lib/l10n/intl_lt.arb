@@ -43,5 +43,8 @@
 "EnableDarkMode": "Įjungti tamsų režimą",
 "Language": "Kalba",
 "SelectLanguage": "Pasirinkite kalbą",
-"Topic": "Temo"
+"Topic": "Temo",
+"notAnswered": "Neatsakyta",
+"lastExamPassed": "Paskutinis išlaikytas egzaminas",
+"lastExamFailed": "Paskutinis neišlaikytas egzaminas"
 }

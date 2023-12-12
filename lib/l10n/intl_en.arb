@@ -43,5 +43,8 @@
   "EnableDarkMode": "Enable Dark Mode",
   "Language": "Language",
   "SelectLanguage": "Select Language",
-  "Topic": "Topic"
+  "Topic": "Topic",
+  "notAnswered": "Not Answered",
+  "lastExamPassed":"Last Exam: Passed",
+  "lastExamFailed":"Last Exam: Failed"
 }

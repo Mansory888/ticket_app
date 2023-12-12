@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/models/mock_exam.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../generated/l10n.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../services/api/question_service.dart';
@@ -7,9 +9,10 @@ import '../topic_screen/topic_list_screen.dart';
 import 'package:ticket_app/views/settings_screen/settings_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:ticket_app/models/user.dart';
+import '../../services/api/user_service.dart';
 
 class MainScreenBodyWidget extends StatefulWidget {
-  final User? user;
+  final UserResponse? user;
 
   const MainScreenBodyWidget({Key? key, required this.user}) : super(key: key);
 
@@ -18,11 +21,15 @@ class MainScreenBodyWidget extends StatefulWidget {
 }
 
 class _MainScreenBodyWidget extends State<MainScreenBodyWidget> {
-  User? user;
+  UserResponse? user;
+  List<UserResponse> top4Users = [];
+  MockExam? lastMockExam;
 
   @override
   void initState() {
     super.initState();
+    loadUsers();
+    loadLastMockExam();
     setState(() {
       user = widget.user;
     });
@@ -30,7 +37,7 @@ class _MainScreenBodyWidget extends State<MainScreenBodyWidget> {
 
   void loadExam() async {
     try {
-      var mockExam = await getExam(user!.userId ?? 0, user!.languageId ?? 1);
+      var mockExam = await getExam(user!.language_id ?? 1);
 
       Navigator.push(
         context,
@@ -47,55 +54,58 @@ class _MainScreenBodyWidget extends State<MainScreenBodyWidget> {
     }
   }
 
-  List<PieChartSectionData> _getSections() {
-    double passedPercentage = 65; // Example value, replace with your data
-    double notPassedPercentage = 100 - passedPercentage;
+  void loadUsers() async {
+    try {
+      var users = await getAllUsers();
 
-    return [
-      PieChartSectionData(
-        color: Colors.green,
-        value: passedPercentage,
-        title: "$passedPercentage %",
-        radius: 40,
-      ),
-      PieChartSectionData(
-        color: Colors.red,
-        value: notPassedPercentage,
-        title: "$notPassedPercentage %",
-        radius: 40,
-      ),
-    ];
+      users.sort((a, b) => b.score?.compareTo(a.score ?? 0) ?? 0);
+
+      var top4Users = users.take(4).toList();
+
+      setState(() {
+        this.top4Users = top4Users;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
-  TableRow _buildTableRow(String leftText, String rightText) {
+  void loadLastMockExam() async {
+    try {
+      List<MockExam> mockExams = await getAllMockExams();
+      mockExams.sort((a, b) {
+        return b.completion_date!.compareTo(a.completion_date!);
+      });
+
+      setState(() {
+        lastMockExam = mockExams.isNotEmpty ? mockExams.first : null;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  TableRow _buildTableRow(String leftText, String rightText, {Color? color}) {
+    Color textColor = color != null ? Colors.white : Colors.black;
+
     return TableRow(
+      decoration: BoxDecoration(
+        color: color, // Apply the background color if provided
+      ),
       children: [
         Container(
           padding: EdgeInsets.all(6),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(leftText),
-              Text(rightText),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  TableRow _buildTableRowWithColor(
-      String leftText, String rightText, Color color) {
-    return TableRow(
-      children: [
-        Container(
-          color: color,
-          padding: EdgeInsets.all(6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(leftText, style: TextStyle(color: Colors.white)),
-              Text(rightText, style: TextStyle(color: Colors.white)),
+              Text(
+                leftText,
+                style: TextStyle(color: textColor),
+              ),
+              Text(
+                rightText,
+                style: TextStyle(color: textColor),
+              ),
             ],
           ),
         ),
@@ -123,60 +133,39 @@ class _MainScreenBodyWidget extends State<MainScreenBodyWidget> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Legend
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 20,
-                                height: 20,
-                                color: Colors.green,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 4.0),
-                              ),
-                              Text(S.of(context).passed),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                width: 20,
-                                height: 20,
-                                color: Colors.red,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 4.0, vertical: 4.0),
-                              ),
-                              Text(S.of(context).notPassed),
-                            ],
-                          ),
-                        ],
+                padding:
+                    const EdgeInsets.all(10), // Adjust the padding as needed
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      lastMockExam?.percentage != null &&
+                              lastMockExam!.percentage >= 80
+                          ? S.of(context).lastExamPassed
+                          : S.of(context).lastExamFailed,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: lastMockExam?.percentage != null &&
+                                lastMockExam!.percentage >= 80
+                            ? Colors.green
+                            : Colors.red,
                       ),
-                      const SizedBox(
-                          width:
-                              20), // Spacing between the legend and the chart
-                      // Pie chart
-                      SizedBox(
-                        height: 100,
-                        width: 200,
-                        child: PieChart(
-                          PieChartData(
-                            sections: _getSections(),
-                            sectionsSpace: 0,
-                            centerSpaceRadius: 20,
-                            borderData: FlBorderData(show: false),
+                      child: Center(
+                        child: Text(
+                          "${lastMockExam?.percentage ?? 0}%",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Container(
@@ -194,13 +183,15 @@ class _MainScreenBodyWidget extends State<MainScreenBodyWidget> {
                     ),
                     Table(
                       border: TableBorder.all(), // Add borders to the table
-                      children: [
-                        _buildTableRow('Player 1', '1000pts'),
-                        _buildTableRow('Player 2', '800pts'),
-                        _buildTableRow('Player 3', '600pts'),
-                        _buildTableRowWithColor('Player 4', '400pts',
-                            Theme.of(context).colorScheme.primary),
-                      ],
+                      children: top4Users.map((user) {
+                        return _buildTableRow(
+                          user.username,
+                          '${user.score} pts',
+                          color: user.user_id == this.user?.user_id
+                              ? Theme.of(context).colorScheme.primary
+                              : null,
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),

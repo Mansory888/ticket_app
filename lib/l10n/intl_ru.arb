@@ -43,5 +43,8 @@
   "EnableDarkMode": "Включить темный режим",
   "Language": "Язык",
   "SelectLanguage": "Выберите язык",
-  "Topic": "Тема"
+  "Topic": "Тема",
+  "notAnswered": "Не отвечено",
+  "lastExamPassed": "Последний экзамен сдан",
+  "lastExamFailed": "Последний экзамен не сдан"
 }

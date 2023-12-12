@@ -29,7 +29,7 @@ class _LoginScreenWidget extends State<LoginScreenWidget> {
           login['username'],
           login['email'],
           login['language_id'],
-          login['id'],
+          login['user_id'],
         );
 
         Navigator.pushReplacementNamed(context, '/main');

@@ -68,9 +68,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Užpildykite savo duomenis"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Pamiršote slaptažodį?"),
+        "lastExamFailed": MessageLookupByLibrary.simpleMessage(
+            "Paskutinis neišlaikytas egzaminas"),
+        "lastExamPassed": MessageLookupByLibrary.simpleMessage(
+            "Paskutinis išlaikytas egzaminas"),
         "leaderBoard": MessageLookupByLibrary.simpleMessage("Lyderių lentelė"),
         "letsGetStarted": MessageLookupByLibrary.simpleMessage("Pradėkime"),
         "newUser": MessageLookupByLibrary.simpleMessage("Naujas vartotojas?"),
+        "notAnswered": MessageLookupByLibrary.simpleMessage("Neatsakyta"),
         "notPassed": MessageLookupByLibrary.simpleMessage("Neišlaikyta"),
         "passed": MessageLookupByLibrary.simpleMessage("Išlaikyta"),
         "passingExamMessage": MessageLookupByLibrary.simpleMessage(

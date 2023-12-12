@@ -11,14 +11,14 @@ Topic _$TopicFromJson(Map<String, dynamic> json) => Topic(
       description: json['description'] as String,
       image: json['image'] as String,
       language_id: json['language_id'] as int,
-      id: json['id'] as int,
+      topic_id: json['topic_id'] as int,
       questions: json['questions'] == null
           ? null
           : QuestionList.fromJson(json['questions'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TopicToJson(Topic instance) => <String, dynamic>{
-      'id': instance.id,
+      'topic_id': instance.topic_id,
       'name': instance.name,
       'description': instance.description,
       'image': instance.image,

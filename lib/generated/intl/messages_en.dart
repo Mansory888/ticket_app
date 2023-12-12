@@ -66,10 +66,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Fill your details"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+        "lastExamFailed":
+            MessageLookupByLibrary.simpleMessage("Last Exam: Failed"),
+        "lastExamPassed":
+            MessageLookupByLibrary.simpleMessage("Last Exam: Passed"),
         "leaderBoard": MessageLookupByLibrary.simpleMessage("Leader Board"),
         "letsGetStarted":
             MessageLookupByLibrary.simpleMessage("Let’s Get Started"),
         "newUser": MessageLookupByLibrary.simpleMessage("New User?"),
+        "notAnswered": MessageLookupByLibrary.simpleMessage("Not Answered"),
         "notPassed": MessageLookupByLibrary.simpleMessage("Not Passed"),
         "passed": MessageLookupByLibrary.simpleMessage("Passed"),
         "passingExamMessage": MessageLookupByLibrary.simpleMessage(

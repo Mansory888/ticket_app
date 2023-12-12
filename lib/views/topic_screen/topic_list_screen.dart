@@ -3,7 +3,7 @@ import '../../generated/l10n.dart';
 import '../../services/api/question_service.dart';
 import 'topic_screen.dart';
 import '/models/topic.dart';
-import 'package:ticket_app/models/user.dart';
+import 'package:ticket_app/models/user_response.dart';
 import '../../services/api/user_service.dart';
 
 class TopicListScreenWidget extends StatefulWidget {
@@ -23,8 +23,8 @@ class _TopicListScreenWidget extends State<TopicListScreenWidget> {
   }
 
   Future<void> _getTopics() async {
-    User userData = await getUserData();
-    final List<Topic> topics = await getAllTopics(userData.languageId ?? 1);
+    UserResponse userData = await getUserData();
+    final List<Topic> topics = await getAllTopics(userData.language_id ?? 1);
     setState(() {
       this.topics = topics;
     });
