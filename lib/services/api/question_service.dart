@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_app/models/mock_exam.dart';
 import 'package:ticket_app/models/question.dart';
 import 'package:ticket_app/models/question_list.dart';
+import 'package:ticket_app/models/question_report.dart';
 import 'package:ticket_app/models/topic.dart';
 import 'api_client.dart';
 
@@ -57,6 +58,17 @@ Future<Question> postQuestion(Question question) async {
   if (response.statusCode == 200) {
     Map<String, dynamic> jsonData = json.decode(response.body);
     return Question.fromJson(jsonData);
+  } else {
+    throw response.body;
+  }
+}
+
+Future<String> postQuestionReport(QuestionReport questionReport) async {
+  final response =
+      await postRequest('questions/report', questionReport.toJson());
+
+  if (response.statusCode == 201) {
+    return response.body;
   } else {
     throw response.body;
   }

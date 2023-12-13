@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_app/models/mock_exam.dart';
 import 'package:ticket_app/models/question.dart';
 import 'package:ticket_app/models/question_list.dart';
+import 'package:ticket_app/models/question_report.dart';
 import '../../generated/l10n.dart';
 import '../../models/answer.dart';
 import 'dart:convert';
@@ -33,6 +34,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   MockExam? mockExam;
   Timer? _timer;
   int _remainingTime = 30 * 60;
+  final reportController = TextEditingController();
 
   @override
   void initState() {
@@ -79,6 +81,15 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
   void dispose() {
     _timer?.cancel(); // Cancel the timer when widget is disposed
     super.dispose();
+  }
+
+  void reportQuestion() async {
+    QuestionReport report = QuestionReport(
+      question_id: questions[currentQuestionIndex].question_id,
+      report: reportController.text,
+      report_date: DateTime.now(),
+    );
+    await postQuestionReport(report);
   }
 
   // Call this method when an answer is selected
@@ -367,9 +378,10 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
                                 ),
                                 subtitle: Text(S.of(context).QuestionWrong),
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 height: 200,
                                 child: TextField(
+                                  controller: reportController,
                                   maxLines: null, // Set this
                                   expands: true,
                                   maxLength: 200, // and this
@@ -377,7 +389,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
                                       .multiline, // Allows for multiple lines
                                   textAlignVertical: TextAlignVertical
                                       .top, // Aligns text to the top
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                   ),
                                 ),
@@ -409,6 +421,7 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        reportQuestion();
                                         Navigator.pop(context);
                                       },
                                       style: ElevatedButton.styleFrom(

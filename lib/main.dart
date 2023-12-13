@@ -7,6 +7,7 @@ import 'generated/l10n.dart';
 import 'provider.dart' as provider;
 import 'package:provider/provider.dart';
 import 'provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(
@@ -15,6 +16,13 @@ void main() {
       child: MyApp(),
     ),
   );
+  requestPermissions();
+}
+
+void requestPermissions() async {
+  await [
+    Permission.storage,
+  ].request();
 }
 
 class MyApp extends StatelessWidget {
