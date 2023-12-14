@@ -89,7 +89,9 @@ class _QuestionViewWidget extends State<QuestionViewWidget> {
       report: reportController.text,
       report_date: DateTime.now(),
     );
-    await postQuestionReport(report);
+    if (reportController.text.isNotEmpty) {
+      await postQuestionReport(report);
+    }
   }
 
   // Call this method when an answer is selected
