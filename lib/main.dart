@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     final locale = Provider.of<LocaleProvider>(context).locale;
 
     return MaterialApp(
-      title: 'My Flutter App',
+      title: 'VDE',
       locale: locale,
       localizationsDelegates: const [
         S.delegate,
